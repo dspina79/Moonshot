@@ -9,8 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ScrollView {
+            VStack {
+                GeometryReader { geo in
+                    Image("swiftlogo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geo.size.width, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        .clipped()
+                }
+                
+                ForEach(0..<100) {
+                    Text("Item \($0)")
+                }
+            }.frame(maxWidth: .infinity)
+        }
     }
 }
 
