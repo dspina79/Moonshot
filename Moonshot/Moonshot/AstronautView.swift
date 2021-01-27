@@ -34,6 +34,8 @@ struct AstronautView: View {
                         Image(self.astronaut.id)
                             .resizable()
                             .scaledToFit()
+                            .accessibility(label: Text("\(self.astronaut.name)"))
+                            .accessibilityRemoveTraits(.isImage)
                             .frame(width: geo.size.width)
                         
                         Text(self.astronaut.description)
@@ -45,13 +47,17 @@ struct AstronautView: View {
                                 Image(md.mission.image)
                                     .resizable()
                                     .scaledToFit()
+                                    .accessibility(label: Text(" \(md.mission.displayName)"))
+                                    .accessibilityRemoveTraits(.isImage)
                                     .frame(width: 44, height: 44)
                                     
                                 VStack {
                                     Text("\(md.mission.displayName)")
                                     Text("\(md.mission.launcDateDisplay)")
+                                        .accessibilityLabel(Text("Launch Date \(md.mission.launcDateDisplay)"))
                                 }
                                 Text(md.role)
+                                    .accessibilityLabel(Text("Mission Position \(md.role)"))
                                     .padding()
                             }.padding(.horizontal)
                         }

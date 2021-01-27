@@ -38,9 +38,13 @@ struct MissionView: View {
                 Image(self.mission.image)
                     .resizable()
                     .scaledToFit()
+                    .accessibility(label: Text("\(self.mission.displayName)"))
+                    .accessibilityRemoveTraits(.isImage)
                     .frame(maxWidth: geo.size.width * 0.7)
                     .padding(.top)
+                
                 Text(self.mission.launcDateDisplay)
+                    .accessibility(label: Text("Launch Date: \(self.mission.launcDateDisplay)"))
                 Text(self.mission.description)
                     .padding()
                 ForEach(self.astronauts, id: \.role) {crewmember in
@@ -53,6 +57,8 @@ struct MissionView: View {
                                 .overlay(Circle()
                                             .stroke(crewmember.role == "Commander" ? Color.yellow : Color.primary, lineWidth: 2)
                                 )
+                                .accessibility(label: Text(crewmember.astronaut.name))
+                                .accessibilityRemoveTraits(.isImage)
                             
                             VStack(alignment: .leading) {
                                 Text(crewmember.astronaut.name)
@@ -63,6 +69,8 @@ struct MissionView: View {
                                     if crewmember.role == "Commander" {
                                         Image(systemName: "star.fill")
                                             .foregroundColor(.yellow)
+                                            .accessibility(label: Text("Commander"))
+                                            .accessibilityRemoveTraits(.isImage)
                                     }
                                 }
                             }
@@ -71,6 +79,8 @@ struct MissionView: View {
                         .padding(.horizontal)
                     }
                     .buttonStyle(PlainButtonStyle())
+                    .accessibility(hint: Text("Click for astronaut details"))
+                    .accessibilityAddTraits(.isButton)
                 }
                 
                 Spacer(minLength: 25)

@@ -14,25 +14,26 @@ struct ContentView: View {
                         Image(mission.image)
                             .resizable()
                             .scaledToFit()
+                            .accessibility(hidden: true)
                             .frame(width: 44, height: 44)
                         VStack(alignment: .leading) {
                             Text(mission.displayName)
                                 .font(.headline)
                             if showMissionDates {
                                 Text(mission.launcDateDisplay)
+                                    .accessibility(label: Text("Launch Date  \(mission.launcDateDisplay)"))
                             } else {
-                                Text(getCrewMembers(mission));
+                                Text(getCrewMembers(mission))
                             }
                         }
                     }
                 }
             }
             .navigationBarItems(leading:
-                Button(action: {
+                Button("\(self.showMissionDates ? "Show Crew Members" : "Show Mission Dates")", action: {
                     self.showMissionDates.toggle()
-                }) {
-                    Text("\(self.showMissionDates ? "Show Crew Members" : "Show Mission Dates")")
-                }
+                })
+                                    .accessibility(hint: Text("Toggle crew member or mission displays."))
             )
             .navigationBarTitle("Moonshot")
             
