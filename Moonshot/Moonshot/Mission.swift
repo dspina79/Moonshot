@@ -30,7 +30,7 @@ struct Mission: Codable, Identifiable{
             return formatter.string(from: ld)
         }
         
-        return "N/A"
+        return "Not Applicable"
     }
     
     var image: String {
