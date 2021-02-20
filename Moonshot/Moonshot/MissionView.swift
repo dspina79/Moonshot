@@ -34,15 +34,19 @@ struct MissionView: View {
     
     var body: some View {
         GeometryReader { geo in
-            ScrollView {
-                Image(self.mission.image)
-                    .resizable()
-                    .scaledToFit()
-                    .accessibility(label: Text("\(self.mission.displayName)"))
-                    .accessibilityRemoveTraits(.isImage)
-                    .frame(maxWidth: geo.size.width * 0.7)
-                    .padding(.top)
-                
+            ScrollView(.vertical) {
+                GeometryReader { imgGeo in
+                    VStack(alignment: .center) {
+                        Image(self.mission.image)
+                        .resizable()
+                        .scaledToFit()
+                        .accessibility(label: Text("\(self.mission.displayName)"))
+                        .accessibilityRemoveTraits(.isImage)
+                            .frame(maxWidth:  imgGeo.frame(in: .global).maxY - (geo.size.height / 16.0) < geo.size.width * 0.6 ? geo.size.width * 0.6 :  imgGeo.frame(in: .global).maxY - (geo.size.height / 16.0))
+                        .padding(.top)
+                    }
+                    .frame(width: geo.size.width)
+                }
                 Text(self.mission.launcDateDisplay)
                     .accessibility(label: Text("Launch Date: \(self.mission.launcDateDisplay)"))
                 Text(self.mission.description)
@@ -86,7 +90,8 @@ struct MissionView: View {
                 Spacer(minLength: 25)
                 
             }
-        }.navigationBarTitle(Text(self.mission.displayName), displayMode: .inline)
+        }
+        .navigationBarTitle(Text(self.mission.displayName), displayMode: .inline)
     }
 }
 
